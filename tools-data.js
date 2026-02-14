@@ -52,5 +52,11 @@ const tools = [
         "title": "Password Generator",
         "description": "Generate strong, secure passwords with customizable options.",
         "thumbnail": "password-generator/thumbnail.png"
+    },
+    {
+        "id": "schengen-visits-tracker",
+        "title": "Schengen Visits Tracker",
+        "description": "Track your Schengen Area visits to stay within the 90/180 day rule.",
+        "thumbnail": "schengen-visits-tracker/thumbnail.png"
     }
 ];

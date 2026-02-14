@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schengen Visits Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Schengen Visits Tracker</h1>
+        <p>Track your stays in the Schengen Area (90 days in any 180-day period)</p>
+
+        <div class="status">
+            <h2>Current Status</h2>
+            <div class="status-info">
+                <div class="days-used">Days used in last 180 days: <span id="daysUsed">0</span></div>
+                <div class="days-remaining">Days remaining: <span id="daysRemaining">90</span></div>
+                <div class="status-indicator" id="statusIndicator">Valid</div>
+            </div>
+        </div>
+
+        <div class="add-visit">
+            <h2>Add New Visit</h2>
+            <form id="visitForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="entryDate">Entry Date:</label>
+                        <input type="date" id="entryDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exitDate">Exit Date:</label>
+                        <input type="date" id="exitDate" required>
+                    </div>
+                </div>
+                <button type="submit">Add Visit</button>
+            </form>
+        </div>
+
+        <div class="visits-list">
+            <h2>Visit History</h2>
+            <div class="visits-sections">
+                <div class="past-visits">
+                    <h3>Past Visits</h3>
+                    <ul id="pastVisitsList"></ul>
+                </div>
+                <div class="planned-visits">
+                    <h3>Planned Visits</h3>
+                    <ul id="plannedVisitsList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
