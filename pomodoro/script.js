@@ -1,3 +1,5 @@
+const appId = 'pomodoro';
+
 let timer;
 let timeLeft;
 let isRunning = false;
@@ -19,7 +21,7 @@ function playBeep() {
 }
 
 function loadSettings() {
-    const saved = localStorage.getItem('pomodoro-settings');
+    const saved = localStorage.getItem(`${appId}-pomodoro-settings`);
     if (saved) {
         Object.assign(settings, JSON.parse(saved));
     }
@@ -35,7 +37,7 @@ function saveSettings() {
     settings.shortBreak = parseInt(document.getElementById('short-break').value);
     settings.longBreak = parseInt(document.getElementById('long-break').value);
     settings.sessions = parseInt(document.getElementById('sessions').value);
-    localStorage.setItem('pomodoro-settings', JSON.stringify(settings));
+    localStorage.setItem(`${appId}-pomodoro-settings`, JSON.stringify(settings));
     resetTimer();
 }
 
@@ -115,7 +117,7 @@ function updateDisplay() {
 
 document.getElementById('tomato').addEventListener('click', () => {
     const today = new Date().toDateString();
-    const key = 'tomato-clicks-' + today;
+    const key = `${appId}-tomato-clicks-` + today;
     let clicks = parseInt(localStorage.getItem(key) || '0');
     clicks++;
     localStorage.setItem(key, clicks.toString());

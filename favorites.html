@@ -9,19 +9,20 @@
 </head>
 <body>
     <nav>
-        <h1>🛠️ Toolmania</h1>
-        <a href="index.html">Home</a>
+        <div class="nav-left">
+            <a href="index.html"><img src="logo.png" alt="Toolmania" class="logo"></a>
+            <a href="index.html">Home</a>
+        </div>
     </nav>
     <div class="main">
-        <h1>Your Favorites</h1>
-        <p class="subtitle">Quick access to your favorite tools</p>
         <div class="favorites-section">
-            <ul class="favorites-list" id="favorites-list">
+            <div class="tools-grid" id="tools-container">
                 <!-- Favorites will be loaded here -->
-            </ul>
+            </div>
         </div>
     </div>
 
+    <script src="tools-data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
