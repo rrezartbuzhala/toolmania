@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUID Generator - Create UUIDs Online Free (v1, v4)</title>
+    <meta name="description" content="Free online GUID generator supporting UUID versions: v1 (time-based) and v4 (random). Generate universally unique identifiers instantly with copy-to-clipboard functionality. Perfect for developers, databases, and unique ID generation.">
+    <meta name="keywords" content="GUID generator, UUID generator, UUID v1, UUID v4, time-based UUID, random UUID, unique identifier generator, online tool, developer tools, database IDs, globally unique identifier, copy to clipboard">
+    <meta name="author" content="GUID Generator">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="https://guid-generator.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GUID Generator - Create UUIDs Online Free (v1, v4)">
+    <meta property="og:description" content="Free online GUID generator supporting UUID versions: v1 (time-based) and v4 (random). Generate universally unique identifiers instantly.">
+    <meta property="og:url" content="https://guid-generator.com">
+    <meta property="og:site_name" content="GUID Generator">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://guid-generator.com/guid-generator-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="GUID Generator interface showing different UUID versions">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="GUID Generator - Create UUIDs Online Free (v1, v4)">
+    <meta property="twitter:description" content="Free online GUID generator supporting UUID versions: v1 (time-based) and v4 (random). Generate universally unique identifiers instantly.">
+    <meta property="twitter:image" content="https://guid-generator.com/guid-generator-preview.png">
+    <meta property="twitter:image:alt" content="GUID Generator interface">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "GUID Generator",
+        "description": "Free online GUID generator supporting UUID versions (v1, v4). Generate universally unique identifiers instantly with copy-to-clipboard functionality.",
+        "url": "https://guid-generator.com",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "UUID v1 (Time-based) generation",
+            "UUID v4 (Random) generation",
+            "Bulk generation support",
+            "Copy to clipboard functionality",
+            "RFC 4122 compliant"
+        ],
+        "screenshot": "https://guid-generator.com/guid-generator-preview.png",
+        "author": {
+            "@type": "Organization",
+            "name": "GUID Generator"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "GUID Generator"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is the difference between UUID versions?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "UUID v1 uses timestamp and MAC address, v4 is completely random. Each has different use cases for uniqueness guarantees."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When should I use UUID v4?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "UUID v4 is the most common choice for general-purpose unique identifiers when you don't need predictable or sortable IDs. It's completely random and provides the highest entropy."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I generate multiple UUIDs at once?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Specify the quantity you need and generate multiple UUIDs simultaneously. Each one will be unique and RFC 4122 compliant."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>GUID Generator</h1>
+    <p class="description">Generate universally unique identifiers (UUIDs) instantly - Random or Time-based</p>
+
+    <div class="container">
+        <div class="controls">
+            <div class="input-group">
+                <label>GUID Type:</label>
+                <select id="guidType" onchange="updateInputs()">
+                    <option value="v4">Random (UUID v4)</option>
+                    <option value="v1">Time-based (UUID v1)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Number of GUIDs:</label>
+                <input type="number" id="guidCount" value="1" min="1" max="100">
+                <button class="generate-btn" onclick="generateGUIDs()">Generate GUIDs</button>
+            </div>
+        </div>
+
+        <div id="guids-container">
+            <div class="guid-display">
+                <div class="guid-item">
+                    <strong>Click "Generate GUIDs" to create unique identifiers</strong>
+                </div>
+            </div>
+        </div>
+
+        <button class="copy-btn" onclick="copyAllGUIDs()" style="display: none;" id="copyButton">Copy All GUIDs</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

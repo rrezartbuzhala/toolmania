@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - Toolmania</title>
+    <meta name="description" content="Generate strong, secure passwords with customizable options. Include uppercase, lowercase, numbers, and special characters.">
+    <meta name="keywords" content="password generator, secure password, random password, password strength, password security">
+    <meta name="author" content="Password Generator">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Password Generator</h1>
+        <p class="description">Generate strong, secure passwords with customizable options</p>
+
+        <div class="password-display">
+            <input type="text" id="passwordOutput" readonly value="Click Generate to create a password">
+            <button id="copyBtn" onclick="copyPassword()">📋 Copy</button>
+        </div>
+
+        <div class="options">
+            <div class="option-group">
+                <label for="length">Password Length:</label>
+                <input type="range" id="length" min="4" max="64" value="12" oninput="updateLengthValue()">
+                <span id="lengthValue">12</span>
+            </div>
+
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="uppercase" checked onchange="generatePassword()">
+                    <span class="checkmark"></span>
+                    Include Uppercase Letters (A-Z)
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="lowercase" checked onchange="generatePassword()">
+                    <span class="checkmark"></span>
+                    Include Lowercase Letters (a-z)
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="numbers" checked onchange="generatePassword()">
+                    <span class="checkmark"></span>
+                    Include Numbers (0-9)
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="symbols" checked onchange="generatePassword()">
+                    <span class="checkmark"></span>
+                    Include Special Characters (!@#$%^&*)
+                </label>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="regenerateBtn" onclick="generatePassword()">🎲 Generate New</button>
+        </div>
+
+        <div class="password-strength">
+            <div class="strength-meter">
+                <div id="strengthBar" class="strength-bar"></div>
+            </div>
+            <div id="strengthText">Password Strength: Medium</div>
+        </div>
+
+        <div class="password-info">
+            <h3>Password Tips</h3>
+            <ul>
+                <li>Use at least 12 characters for better security</li>
+                <li>Include a mix of uppercase, lowercase, numbers, and symbols</li>
+                <li>Avoid using personal information or common words</li>
+                <li>Use a unique password for each account</li>
+                <li>Consider using a password manager to store your passwords</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

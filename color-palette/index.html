@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator - Toolmania</title>
+    <meta name="description" content="Generate beautiful color palettes for your design projects. Create random color schemes, monochromatic palettes, and complementary colors.">
+    <meta name="keywords" content="color palette generator, color scheme, design tools, random colors, monochromatic, complementary colors">
+    <meta name="author" content="Color Palette Generator">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Color Palette Generator</h1>
+        <p class="description">Generate beautiful color palettes for your designs</p>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="paletteType">Palette Type:</label>
+                <select id="paletteType">
+                    <option value="random">Random Colors</option>
+                    <option value="monochromatic">Monochromatic</option>
+                    <option value="complementary">Complementary</option>
+                    <option value="analogous">Analogous</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="numColors">Number of Colors:</label>
+                <input type="number" id="numColors" value="5" min="2" max="10">
+            </div>
+            <button id="generate-btn" onclick="generatePalette()">Generate Palette</button>
+        </div>
+
+        <div id="palette" class="palette">
+            <!-- Colors will be displayed here -->
+        </div>
+
+        <button class="copy-btn" onclick="copyPalette()" style="display: none;" id="copyButton">Copy Hex Codes</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

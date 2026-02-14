@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Chart Maker - Create Interactive Radar Charts Online Free</title>
+    <meta name="description" content="Create beautiful, interactive radar charts online for free. Easy-to-use radar chart maker with customizable colors, criteria, and titles. Perfect for data visualization, performance analysis, SWOT analysis, and presentations. Download high-quality PNG images instantly.">
+    <meta name="keywords" content="radar chart maker, spider chart generator, star chart creator, data visualization tool, interactive charts, chart maker online, PNG download, performance chart, SWOT analysis, data analysis tool, chart generator free, radar diagram, spider graph, star plot, comparison chart">
+    <meta name="author" content="Radar Chart Maker">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="https://radar-chart-maker.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Radar Chart Maker - Create Interactive Radar Charts Online Free">
+    <meta property="og:description" content="Create beautiful, interactive radar charts online for free. Easy-to-use radar chart maker with customizable colors, criteria, and titles. Perfect for data visualization, performance analysis, SWOT analysis, and presentations.">
+    <meta property="og:url" content="https://radar-chart-maker.com">
+    <meta property="og:site_name" content="Radar Chart Maker">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://radar-chart-maker.com/radar-chart-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Interactive radar chart example created with Radar Chart Maker">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Radar Chart Maker - Create Interactive Radar Charts Online Free">
+    <meta property="twitter:description" content="Create beautiful, interactive radar charts online for free. Easy-to-use radar chart maker with customizable colors, criteria, and titles.">
+    <meta property="twitter:image" content="https://radar-chart-maker.com/radar-chart-preview.png">
+    <meta property="twitter:image:alt" content="Interactive radar chart example">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Radar Chart Maker",
+        "description": "Free online radar chart maker for creating interactive data visualization charts. Supports customizable colors, criteria, and PNG download.",
+        "url": "https://radar-chart-maker.com",
+        "applicationCategory": "DataVisualization",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Interactive radar chart creation",
+            "Customizable colors and criteria",
+            "Real-time chart preview",
+            "High-quality PNG download",
+            "Easy-to-use interface"
+        ],
+        "screenshot": "https://radar-chart-maker.com/radar-chart-preview.png",
+        "author": {
+            "@type": "Organization",
+            "name": "Radar Chart Maker"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Radar Chart Maker"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I create a radar chart?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Simply add criteria using the + Add Criterion button, enter values for each criterion, customize the chart title and color, and your radar chart will be generated automatically in real-time."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I download my radar chart?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Click the Download PNG button to save your radar chart as a high-quality PNG image that you can use in presentations, reports, or websites."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What types of data work best with radar charts?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Radar charts are perfect for comparing multiple variables, performance analysis, SWOT analysis, skill assessments, and any data where you want to show how different factors relate to each other."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Radar Chart Generator</h1>
+
+    <div class="container">
+        <div class="controls">
+            <div id="inputs-container">
+                </div>
+            <button class="add-btn" onclick="addRow()">+ Add Criterion</button>
+            <hr style="width:100%; border: 0; border-top: 1px solid #eee;">
+            <label>Chart Title: <input type="text" id="chartTitle" placeholder="Enter chart title" oninput="draw()"></label>
+            <label>Fill Color: <input type="color" id="chartColor" value="#2563eb" onchange="draw()"></label>
+            <button onclick="downloadChart()">Download PNG</button>
+        </div>
+
+        <canvas id="radarCanvas" width="700" height="500"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

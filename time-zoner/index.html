@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Zoner - Timezone Converter</title>
+    <meta name="description" content="Convert time across different timezones using sliders. Set your base timezone and see equivalent times worldwide.">
+    <meta name="keywords" content="timezone converter, time zones, world clock, slider tool">
+    <meta name="author" content="Time Zoner">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🕐 Time Zoner <span class="badge">Under Development</span></h1>
+        <p class="description">Convert time across timezones using interactive sliders</p>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="base-timezone">Base Timezone:</label>
+                <select id="base-timezone">
+                    <option value="UTC">UTC</option>
+                    <option value="America/New_York">Eastern Time (ET)</option>
+                    <option value="America/Chicago">Central Time (CT)</option>
+                    <option value="America/Denver">Mountain Time (MT)</option>
+                    <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                    <option value="Europe/London">London (GMT/BST)</option>
+                    <option value="Europe/Paris">Paris (CET/CEST)</option>
+                    <option value="Asia/Tokyo">Tokyo (JST)</option>
+                    <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="base-time">Base Time:</label>
+                <div class="time-inputs">
+                    <input type="number" id="base-hour" min="0" max="23" value="12">
+                    <span>:</span>
+                    <input type="number" id="base-minute" min="0" max="59" value="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="timezones" id="timezones">
+            <!-- Timezones will be populated here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

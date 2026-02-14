@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel Spinner - Random Decision Maker Tool</title>
+    <meta name="description" content="Free online wheel spinner for random decision making. Set custom options and spin the wheel to make fair choices. Perfect for games, decisions, and random selections.">
+    <meta name="keywords" content="wheel spinner, random selector, decision maker, spin wheel, random choice, online tool, game spinner, lottery wheel">
+    <meta name="author" content="Wheel Spinner">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎡 Wheel Spinner</h1>
+        <p class="description">Set your options and spin the wheel for random decisions</p>
+
+        <div class="options-section">
+            <div class="input-group">
+                <label for="options">Options (one per line):</label>
+                <textarea id="options" placeholder="Option 1
+Option 2
+Option 3
+Option 4"></textarea>
+            </div>
+            <button id="spin-btn" onclick="spinWheel()">Spin the Wheel!</button>
+        </div>
+
+        <div class="wheel-container">
+            <canvas id="wheel" width="400" height="400"></canvas>
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <audio id="spinSound" src="media/sound.mp3" preload="auto"></audio>
+    <script src="script.js"></script>
+</body>
+</html>

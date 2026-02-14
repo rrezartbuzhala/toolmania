@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Comparer - Compare Text Differences Online Free Tool</title>
+    <meta name="description" content="Free online text comparison tool with dark theme. Compare two texts and highlight differences, additions, deletions, and changes in real-time. Perfect for proofreading, version comparison, code review, document analysis, and text validation.">
+    <meta name="keywords" content="text comparer, text comparison tool, diff checker, text difference finder, compare text online, text analyzer, proofreading tool, version comparison, code diff, document comparison, text validator, difference highlighter, online text diff, text analysis tool">
+    <meta name="author" content="Text Comparer">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="theme-color" content="#1a1a1a">
+    <link rel="icon" href="thumbnail.png">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="https://text-comparer.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Text Comparer - Compare Text Differences Online Free Tool">
+    <meta property="og:description" content="Free online text comparison tool with dark theme. Compare two texts and highlight differences, additions, deletions, and changes in real-time. Perfect for proofreading and version comparison.">
+    <meta property="og:url" content="https://text-comparer.com">
+    <meta property="og:site_name" content="Text Comparer">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://text-comparer.com/text-comparer-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Text comparison tool interface showing differences highlighted">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Text Comparer - Compare Text Differences Online Free Tool">
+    <meta property="twitter:description" content="Free online text comparison tool with dark theme. Compare two texts and highlight differences, additions, deletions, and changes in real-time.">
+    <meta property="twitter:image" content="https://text-comparer.com/text-comparer-preview.png">
+    <meta property="twitter:image:alt" content="Text comparison interface">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Text Comparer",
+        "description": "Free online text comparison tool with dark theme. Compare two texts and highlight differences, additions, deletions, and changes in real-time.",
+        "url": "https://text-comparer.com",
+        "applicationCategory": "TextProcessing",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Real-time text comparison",
+            "Difference highlighting",
+            "Dark theme interface",
+            "Line-by-line comparison",
+            "Character count tracking",
+            "Side-by-side view"
+        ],
+        "screenshot": "https://text-comparer.com/text-comparer-preview.png",
+        "author": {
+            "@type": "Organization",
+            "name": "Text Comparer"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Text Comparer"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How does the text comparison work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Paste or type text in both panels and the tool will automatically compare them line by line, highlighting additions in green, deletions in red with strikethrough, and showing unchanged text in the default color."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I compare large documents?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! The tool supports comparing large text documents with scrollable panels. The comparison happens in real-time as you type, making it efficient for documents of any size."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Text Comparer</h1>
+    <p class="description">Compare two texts and highlight differences, additions, and deletions</p>
+
+    <div class="container">
+        <div id="results" class="results" style="display: none;">
+            <div class="editor-container">
+                <div class="editor-header">
+                    <span>Comparison Result</span>
+                    <span id="resultStats">Ready</span>
+                </div>
+                <div class="editor-content">
+                    <div id="comparisonResult" class="diff-content" style="border: none; margin: 0; min-height: 200px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="options">
+            <div class="controls">
+                <button class="clear-btn" onclick="clearTexts()">Clear All</button>
+            </div>
+        </div>
+
+        <div class="text-areas">
+            <div class="text-area">
+                <div class="editor-container">
+                    <div class="editor-header">
+                        <span>Original Text</span>
+                        <span id="charCount1">0 characters</span>
+                    </div>
+                    <div class="editor-content">
+                        <textarea id="text1" placeholder="Paste or type your original text here..." oninput="handleInput()" style="color: #e5e5e5 !important; caret-color: #e5e5e5 !important; background-color: #1e1e1e !important;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="text-area">
+                <div class="editor-container">
+                    <div class="editor-header">
+                        <span>Modified Text</span>
+                        <span id="charCount2">0 characters</span>
+                    </div>
+                    <div class="editor-content">
+                        <textarea id="text2" placeholder="Paste or type your modified text here..." oninput="handleInput()" style="color: #e5e5e5 !important; caret-color: #e5e5e5 !important; background-color: #1e1e1e !important;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

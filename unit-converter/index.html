@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - Toolmania</title>
+    <meta name="description" content="Convert between different units of measurement. Length, weight, temperature, area, volume, and more. Fast and accurate conversions.">
+    <meta name="keywords" content="unit converter, measurement converter, length converter, weight converter, temperature converter, metric conversion">
+    <meta name="author" content="Unit Converter">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="thumbnail.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📏 Unit Converter</h1>
+        <p class="description">Convert between different units of measurement</p>
+
+        <div class="converter">
+            <div class="input-group">
+                <label for="category">Category:</label>
+                <select id="category" onchange="updateUnits()">
+                    <option value="length">Length</option>
+                    <option value="weight">Weight</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="area">Area</option>
+                    <option value="volume">Volume</option>
+                </select>
+            </div>
+
+            <div class="conversion">
+                <div class="input-section">
+                    <input type="number" id="inputValue" placeholder="Enter value" oninput="convert()">
+                    <select id="fromUnit" onchange="convert()"></select>
+                </div>
+
+                <div class="swap-btn" onclick="swapUnits()">⇅</div>
+
+                <div class="output-section">
+                    <input type="number" id="outputValue" readonly>
+                    <select id="toUnit" onchange="convert()"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="common-conversions">
+            <h3>Common Conversions</h3>
+            <div id="commonList"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

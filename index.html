@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toolmania - Free Online Productivity Tools</title>
+    <meta name="description" content="Free online productivity tools collection. Access radar chart maker, GUID generator, text comparer, and more tools for developers, designers, and professionals.">
+    <meta name="keywords" content="online tools, productivity tools, free tools, radar chart, GUID generator, text comparer, developer tools, design tools">
+    <meta name="author" content="Toolmania">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <img src="logo.png" alt="Toolmania" class="logo">
+        <a href="favorites.html">Favorites</a>
+    </nav>
+    <div class="main">
+        <p class="subtitle">Free online productivity tools for developers, designers, and professionals</p>
+
+        <div class="tools-grid">
+            <a href="radar-chart/index.html" class="tool-card" data-tool="radar-chart" style="background-image: url('radar-chart/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('radar-chart', 'Radar Chart Maker')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Radar Chart Maker</div>
+                    <div class="tool-description">Create interactive radar charts to visualize multivariate data.</div>
+                </div>
+            </a>
+
+            <a href="guid-generator/index.html" class="tool-card" data-tool="guid-generator" style="background-image: url('guid-generator/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('guid-generator', 'GUID Generator')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">GUID Generator</div>
+                    <div class="tool-description">Generate universally unique identifiers (UUIDs) in multiple versions.</div>
+                </div>
+            </a>
+
+            <a href="text-comparer/index.html" class="tool-card" data-tool="text-comparer" style="background-image: url('text-comparer/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('text-comparer', 'Text Comparer')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Text Comparer</div>
+                    <div class="tool-description">Compare two texts and highlight differences in real-time.</div>
+                </div>
+            </a>
+
+            <a href="pomodoro/index.html" class="tool-card" data-tool="pomodoro" style="background-image: url('pomodoro/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('pomodoro', 'Pomodoro Timer')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Pomodoro Timer</div>
+                    <div class="tool-description">Boost productivity with timed work sessions and breaks.</div>
+                </div>
+            </a>
+            <a href="wheel-spinner/index.html" class="tool-card" data-tool="wheel-spinner" style="background-image: url('wheel-spinner/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite(event, 'wheel-spinner', 'Wheel Spinner')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Wheel Spinner</div>
+                    <div class="tool-description">Make random decisions with a customizable spinning wheel.</div>
+                </div>
+            </a>
+            <a href="time-zoner/index.html" class="tool-card" data-tool="time-zoner" style="background-image: url('time-zoner/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('time-zoner', 'Time Zoner')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Time Zoner</div>
+                    <div class="tool-description">Convert time across different timezones using interactive sliders.</div>
+                </div>
+            </a>
+            <a href="color-palette/index.html" class="tool-card" data-tool="color-palette" style="background-image: url('color-palette/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('color-palette', 'Color Palette Generator')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Color Palette Generator</div>
+                    <div class="tool-description">Generate beautiful color palettes for your design projects.</div>
+                </div>
+            </a>
+
+            <a href="unit-converter/index.html" class="tool-card" data-tool="unit-converter" style="background-image: url('unit-converter/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('unit-converter', 'Unit Converter')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Unit Converter</div>
+                    <div class="tool-description">Convert between different units of measurement.</div>
+                </div>
+            </a>
+
+            <a href="password-generator/index.html" class="tool-card" data-tool="password-generator" style="background-image: url('password-generator/thumbnail.png'); background-size: cover;">
+                <button class="favorite-btn" onclick="toggleFavorite('password-generator', 'Password Generator')">☆</button>
+                <div class="tool-details">
+                    <div class="tool-title">Password Generator</div>
+                    <div class="tool-description">Generate strong, secure passwords with customizable options.</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>More tools coming soon! Have a tool suggestion? <a href="mailto:feedback@toolmania.com" style="color: #667eea;">Let us know</a></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
