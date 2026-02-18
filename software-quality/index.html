@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Quality Metrics Checklist</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Software Quality Metrics Checklist</h1>
+        <div id="dashboard">
+            <p>Active Scope: <span id="active-scope">None</span></p>
+            <p>Completion: <span id="completion">0</span>%</p>
+            <p>Failing Metrics: <span id="failing">0</span></p>
+            <p>Total Metrics: <span id="total">0</span></p>
+        </div>
+    </header>
+
+    <section id="scope-management">
+        <h2>Scope Management</h2>
+        <div>
+            <label for="scope-selector">Select Scope:</label>
+            <select id="scope-selector"></select>
+        </div>
+        <div>
+            <input type="text" id="new-scope-name" placeholder="New scope name" required>
+            <button id="add-scope">Add Scope</button>
+            <button id="delete-scope">Delete Scope</button>
+        </div>
+    </section>
+
+    <section id="metrics-section">
+        <h2>Metrics</h2>
+        <div id="filter">
+            <label for="category-filter">Filter by Category:</label>
+            <select id="category-filter">
+                <option value="">All</option>
+                <option value="Reliability">Reliability</option>
+                <option value="Performance">Performance</option>
+                <option value="Security">Security</option>
+                <option value="Maintainability">Maintainability</option>
+                <option value="Testing">Testing</option>
+                <option value="Usability">Usability</option>
+                <option value="Scalability">Scalability</option>
+            </select>
+        </div>
+        <table id="metrics-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Target Value</th>
+                    <th>Current Value</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="metrics-body"></tbody>
+        </table>
+        <form id="add-metric-form">
+            <h3>Add New Metric</h3>
+            <input type="text" name="name" placeholder="Metric name" required>
+            <select name="category" required>
+                <option value="">Select Category</option>
+                <option value="Reliability">Reliability</option>
+                <option value="Performance">Performance</option>
+                <option value="Security">Security</option>
+                <option value="Maintainability">Maintainability</option>
+                <option value="Testing">Testing</option>
+                <option value="Usability">Usability</option>
+                <option value="Scalability">Scalability</option>
+            </select>
+            <input type="text" name="targetValue" placeholder="Target value (e.g., >= 99.9%)" required>
+            <textarea name="explanation" placeholder="How to test this metric..." rows="3"></textarea>
+            <input type="url" name="link" placeholder="External link (optional)">
+            <button type="submit">Add Metric</button>
+        </form>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>

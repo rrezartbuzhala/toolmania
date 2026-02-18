@@ -6,6 +6,18 @@ const tools = [
         "thumbnail": "radar-chart/thumbnail.png"
     },
     {
+        "id": "pomodoro",
+        "title": "Pomodoro Timer",
+        "description": "Boost productivity with timed work sessions and breaks.",
+        "thumbnail": "pomodoro/thumbnail.png"
+    },
+    {
+        "id": "schengen-visits-tracker",
+        "title": "Schengen Visits Tracker",
+        "description": "Track your Schengen Area visits to stay within the 90/180 day rule.",
+        "thumbnail": "schengen-visits-tracker/thumbnail.png"
+    },
+    {
         "id": "guid-generator",
         "title": "GUID Generator",
         "description": "Generate universally unique identifiers (UUIDs) in multiple versions.",
@@ -16,12 +28,6 @@ const tools = [
         "title": "Text Comparer",
         "description": "Compare two texts and highlight differences in real-time.",
         "thumbnail": "text-comparer/thumbnail.png"
-    },
-    {
-        "id": "pomodoro",
-        "title": "Pomodoro Timer",
-        "description": "Boost productivity with timed work sessions and breaks.",
-        "thumbnail": "pomodoro/thumbnail.png"
     },
     {
         "id": "wheel-spinner",
@@ -54,9 +60,9 @@ const tools = [
         "thumbnail": "password-generator/thumbnail.png"
     },
     {
-        "id": "schengen-visits-tracker",
-        "title": "Schengen Visits Tracker",
-        "description": "Track your Schengen Area visits to stay within the 90/180 day rule.",
-        "thumbnail": "schengen-visits-tracker/thumbnail.png"
+        "id": "software-quality",
+        "title": "Software Quality Metrics Checklist",
+        "description": "Track and manage software quality metrics per scope with checklists.",
+        "thumbnail": "software-quality/thumbnail.png"
     }
 ];
