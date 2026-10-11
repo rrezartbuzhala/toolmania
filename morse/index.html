@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MORSE NAVIGATOR // Visual Map & Daily Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-deck-800 bg-deck-900/90 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg bg-deck-850 border border-signal-bright/40 flex items-center justify-center text-signal-bright shadow-[0_0_10px_rgba(52,211,153,0.2)]">
+          <i class="fa-solid fa-dharmachakra text-sm"></i>
+        </div>
+        <div>
+          <h1 class="text-sm font-bold font-mono tracking-wider text-white">MORSE<span class="text-signal-bright">::NAV</span></h1>
+          <p class="text-[10px] font-mono text-deck-400 leading-tight">NATHANSON DECODER CHART</p>
+        </div>
+      </div>
+
+      <!-- Station Status Indicator -->
+      <div class="flex items-center space-x-2 text-xs font-mono">
+        <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-deck-850 border border-deck-800">
+          <span class="w-2 h-2 rounded-full bg-signal-bright animate-pulse"></span>
+          <span class="font-bold text-deck-400">ONLINE</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport Content -->
+  <main class="max-w-4xl mx-auto px-4 py-4 w-full flex-1 pb-24">
+    
+    <!-- VIEW 1: MAP & PRACTICE -->
+    <section id="view-map" class="space-y-4">
+      
+      <!-- Dave Nathanson SVG Decoder Chart Card -->
+      <div class="bg-deck-900 border border-deck-800 rounded-xl p-3 sm:p-4 shadow-lg space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-deck-800 pb-2">
+          <div>
+            <span class="text-[10px] font-mono text-deck-400 tracking-wider">MORSE CODE RECEIVE DECODER CHART (A-Z)</span>
+            <div class="text-xs font-mono text-gray-200 flex items-center space-x-2">
+              <span class="text-signal-bright font-bold">LEFT = DOT (·)</span>
+              <span class="text-deck-500">|</span>
+              <span class="text-signal-amber font-bold">DOWN/RIGHT = DASH (—)</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-[11px] font-mono text-deck-400">TRACKER:</span>
+            <span id="mapCurrentMorse" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-deck-850 border border-deck-700 text-signal-bright min-w-[55px] text-center">START</span>
+          </div>
+        </div>
+
+        <!-- SVG Map Container -->
+        <div class="relative bg-deck-950 rounded-lg p-1.5 sm:p-2 border border-deck-800 overflow-hidden flex flex-col items-center justify-center">
+          <div class="w-full max-w-[680px] max-h-[290px] sm:max-h-[340px] flex items-center justify-center">
+            
+            <svg id="nathansonSvg" viewBox="25 20 595 330" preserveAspectRatio="xMidYMid meet" class="w-full h-auto max-h-[290px] sm:max-h-[340px] select-none font-mono">
+              <defs>
+                <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+
+              <!-- Central Helm Wheel: START HERE -->
+              <g id="svg-start-helm" class="cursor-pointer" transform="translate(325, 75)">
+                <circle cx="0" cy="0" r="14" fill="#11171c" stroke="#4c647a" stroke-width="2" />
+                <circle cx="0" cy="0" r="5" fill="#34d399" />
+                <line x1="-19" y1="0" x2="19" y2="0" stroke="#4c647a" stroke-width="1.8" />
+                <line x1="0" y1="-19" x2="0" y2="19" stroke="#4c647a" stroke-width="1.8" />
+                <line x1="-14" y1="-14" x2="14" y2="14" stroke="#4c647a" stroke-width="1.8" />
+                <line x1="-14" y1="14" x2="14" y2="-14" stroke="#4c647a" stroke-width="1.8" />
+                <circle cx="-20" cy="0" r="2" fill="#7593af" />
+                <circle cx="20" cy="0" r="2" fill="#7593af" />
+                <circle cx="0" cy="-20" r="2" fill="#7593af" />
+                <circle cx="0" cy="20" r="2" fill="#7593af" />
+                <text x="0" y="-25" fill="#94a3b8" font-size="10" text-anchor="middle" font-weight="bold">Start Here</text>
+              </g>
+
+              <!-- LEFT DIT TRUNK & BRANCHES -->
+              <line x1="305" y1="75" x2="60" y2="75" stroke="#334155" stroke-width="2" />
+
+              <!-- E Node & Vertical Dash Stem to A, W, J, R, L, P -->
+              <g id="node-code-." data-code="." data-char="E" class="nathanson-interactive cursor-pointer">
+                <circle cx="255" cy="75" r="5.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5" />
+                <text x="255" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">E</text>
+              </g>
+              <line x1="255" y1="75" x2="255" y2="290" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code-.-" data-code=".-" data-char="A" class="nathanson-interactive cursor-pointer">
+                <rect x="252" y="98" width="6" height="24" rx="2" fill="#f59e0b" />
+                <text x="270" y="113" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="start">A</text>
+              </g>
+              <!-- R / L stem -->
+              <line x1="255" y1="175" x2="175" y2="175" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code-.-." data-code=".-." data-char="R" class="nathanson-interactive cursor-pointer">
+                <circle cx="225" cy="175" r="4.5" fill="#38bdf8" />
+                <text x="225" y="165" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">R</text>
+              </g>
+              <g id="node-code-.-.." data-code=".-.." data-char="L" class="nathanson-interactive cursor-pointer">
+                <circle cx="175" cy="175" r="4.5" fill="#38bdf8" />
+                <text x="175" y="165" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">L</text>
+              </g>
+              <g id="node-code-.--" data-code=".--" data-char="W" class="nathanson-interactive cursor-pointer">
+                <rect x="252" y="208" width="6" height="24" rx="2" fill="#f59e0b" />
+                <text x="270" y="222" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="start">W</text>
+              </g>
+              <line x1="255" y1="262" x2="185" y2="262" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code-.--." data-code=".--." data-char="P" class="nathanson-interactive cursor-pointer">
+                <circle cx="185" cy="262" r="4.5" fill="#38bdf8" />
+                <text x="185" y="252" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">P</text>
+              </g>
+              <g id="node-code-.---" data-code=".---" data-char="J" class="nathanson-interactive cursor-pointer">
+                <rect x="252" y="278" width="6" height="24" rx="2" fill="#f59e0b" />
+                <text x="270" y="293" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="start">J</text>
+              </g>
+
+              <!-- I Node & Stem to U, F -->
+              <g id="node-code-.." data-code=".." data-char="I" class="nathanson-interactive cursor-pointer">
+                <circle cx="150" cy="75" r="5.5" fill="#38bdf8" />
+                <text x="150" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">I</text>
+              </g>
+              <line x1="150" y1="75" x2="150" y2="130" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code-..-" data-code="..-" data-char="U" class="nathanson-interactive cursor-pointer">
+                <rect x="147" y="98" width="6" height="24" rx="2" fill="#f59e0b" />
+                <text x="165" y="113" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="start">U</text>
+              </g>
+              <line x1="150" y1="130" x2="198" y2="130" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code-..-." data-code="..-." data-char="F" class="nathanson-interactive cursor-pointer">
+                <circle cx="198" cy="130" r="4.5" fill="#38bdf8" />
+                <text x="198" y="120" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">F</text>
+              </g>
+
+              <!-- S Node & Stem to V -->
+              <g id="node-code-..." data-code="..." data-char="S" class="nathanson-interactive cursor-pointer">
+                <circle cx="100" cy="75" r="5.5" fill="#38bdf8" />
+                <text x="100" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">S</text>
+              </g>
+              <line x1="100" y1="75" x2="100" y2="125" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code-...-" data-code="...-" data-char="V" class="nathanson-interactive cursor-pointer">
+                <rect x="97" y="98" width="6" height="24" rx="2" fill="#f59e0b" />
+                <text x="114" y="113" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="start">V</text>
+              </g>
+
+              <!-- H Node -->
+              <g id="node-code-...." data-code="...." data-char="H" class="nathanson-interactive cursor-pointer">
+                <circle cx="58" cy="75" r="5.5" fill="#38bdf8" />
+                <text x="58" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">H</text>
+              </g>
+
+              <!-- RIGHT DAH TRUNK & BRANCHES -->
+              <line x1="345" y1="75" x2="520" y2="75" stroke="#334155" stroke-width="2" />
+
+              <g id="node-code--" data-code="-" data-char="T" class="nathanson-interactive cursor-pointer">
+                <rect x="365" y="71" width="26" height="8" rx="2" fill="#f59e0b" />
+                <text x="378" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">T</text>
+              </g>
+              <line x1="422" y1="75" x2="422" y2="282" stroke="#334155" stroke-width="1.8" />
+
+              <g id="node-code---" data-code="--" data-char="M" class="nathanson-interactive cursor-pointer">
+                <rect x="444" y="71" width="26" height="8" rx="2" fill="#f59e0b" />
+                <text x="457" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">M</text>
+              </g>
+              <g id="node-code----" data-code="---" data-char="O" class="nathanson-interactive cursor-pointer">
+                <rect x="498" y="71" width="26" height="8" rx="2" fill="#f59e0b" />
+                <text x="511" y="64" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="middle">O</text>
+              </g>
+
+              <line x1="492" y1="75" x2="492" y2="140" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code---." data-code="--." data-char="G" class="nathanson-interactive cursor-pointer">
+                <circle cx="492" cy="112" r="4.5" fill="#38bdf8" />
+                <text x="478" y="112" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="end">G</text>
+              </g>
+              <line x1="492" y1="112" x2="535" y2="112" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code---.-" data-code="--.-" data-char="Q" class="nathanson-interactive cursor-pointer">
+                <rect x="515" y="108" width="24" height="8" rx="2" fill="#f59e0b" />
+                <text x="527" y="99" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">Q</text>
+              </g>
+              <g id="node-code----.." data-code="--.." data-char="Z" class="nathanson-interactive cursor-pointer">
+                <circle cx="492" cy="140" r="4.5" fill="#38bdf8" />
+                <text x="506" y="141" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="start">Z</text>
+              </g>
+
+              <g id="node-code--." data-code="-." data-char="N" class="nathanson-interactive cursor-pointer">
+                <circle cx="422" cy="180" r="4.5" fill="#38bdf8" />
+                <text x="408" y="179" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="end">N</text>
+              </g>
+              <line x1="422" y1="180" x2="550" y2="180" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code--.-" data-code="-.-" data-char="K" class="nathanson-interactive cursor-pointer">
+                <rect x="446" y="176" width="24" height="8" rx="2" fill="#f59e0b" />
+                <text x="458" y="169" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">K</text>
+              </g>
+              <g id="node-code--.--" data-code="-.--" data-char="Y" class="nathanson-interactive cursor-pointer">
+                <rect x="526" y="176" width="24" height="8" rx="2" fill="#f59e0b" />
+                <text x="538" y="169" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">Y</text>
+              </g>
+              <line x1="512" y1="180" x2="512" y2="216" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code--.-." data-code="-.-." data-char="C" class="nathanson-interactive cursor-pointer">
+                <circle cx="512" cy="216" r="4.5" fill="#38bdf8" />
+                <text x="525" y="217" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="start">C</text>
+              </g>
+
+              <g id="node-code--.." data-code="-.." data-char="D" class="nathanson-interactive cursor-pointer">
+                <circle cx="422" cy="228" r="4.5" fill="#38bdf8" />
+                <text x="408" y="227" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="end">D</text>
+              </g>
+              <line x1="422" y1="228" x2="472" y2="228" stroke="#334155" stroke-width="1.8" />
+              <g id="node-code--..-" data-code="-..-" data-char="X" class="nathanson-interactive cursor-pointer">
+                <rect x="450" y="224" width="23" height="8" rx="2" fill="#f59e0b" />
+                <text x="461" y="217" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">X</text>
+              </g>
+
+              <g id="node-code--..." data-code="-..." data-char="B" class="nathanson-interactive cursor-pointer">
+                <circle cx="422" cy="282" r="4.5" fill="#38bdf8" />
+                <text x="408" y="281" fill="#e2e8f0" font-size="13" font-weight="bold" text-anchor="end">B</text>
+              </g>
+
+              <g transform="translate(42, 290)">
+                <circle cx="6" cy="6" r="3.8" fill="#38bdf8" />
+                <text x="18" y="9" fill="#94a3b8" font-size="9">= DOT</text>
+                <rect x="3" y="16" width="14" height="4.5" rx="1.5" fill="#f59e0b" />
+                <text x="22" y="21" fill="#94a3b8" font-size="9">= DASH</text>
+              </g>
+
+              <text x="42" y="326" fill="#475569" font-size="7.5">© Dave Nathanson KG6ZJ0 copyleft 2010 all wrongs reserved</text>
+
+              <circle id="svgTracerCursor" class="svg-tracer" cx="325" cy="75" r="8" fill="rgba(52, 211, 153, 0.45)" stroke="#34d399" stroke-width="2" filter="url(#glowGreen)" opacity="1" pointer-events="none" />
+            </svg>
+
+          </div>
+        </div>
+
+        <!-- Alphabet Band (A - Z) -->
+        <div class="pt-2 border-t border-deck-800">
+          <div class="text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
+            <span>ALPHABET BAND (A - Z)</span>
+            <span class="text-[9px] text-deck-500">TAP TO AUDITION</span>
+          </div>
+          <div class="grid grid-cols-7 sm:grid-cols-9 md:grid-cols-13 gap-1 text-center" id="alphabetGrid">
+          </div>
+        </div>
+
+        <!-- Dedicated Numbers Row (0 to 9) -->
+        <div class="pt-2 border-t border-deck-800">
+          <div class="text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
+            <span>NUMBERS BAND (5 PULSES)</span>
+            <span class="text-[9px] text-deck-500">TAP TO AUDITION</span>
+          </div>
+          <div class="grid grid-cols-5 sm:grid-cols-10 gap-1 text-center" id="numbersGrid">
+            <div data-code=".----" data-char="1" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">1</span><span class="text-[7px] text-deck-400 font-mono">.----</span></div>
+            <div data-code="..---" data-char="2" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">2</span><span class="text-[7px] text-deck-400 font-mono">..---</span></div>
+            <div data-code="...--" data-char="3" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">3</span><span class="text-[7px] text-deck-400 font-mono">...--</span></div>
+            <div data-code="....-" data-char="4" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">4</span><span class="text-[7px] text-deck-400 font-mono">....-</span></div>
+            <div data-code="....." data-char="5" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">5</span><span class="text-[7px] text-deck-400 font-mono">.....</span></div>
+            <div data-code="-...." data-char="6" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">6</span><span class="text-[7px] text-deck-400 font-mono">-....</span></div>
+            <div data-code="--..." data-char="7" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">7</span><span class="text-[7px] text-deck-400 font-mono">--...</span></div>
+            <div data-code="---.." data-char="8" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">8</span><span class="text-[7px] text-deck-400 font-mono">---..</span></div>
+            <div data-code="----." data-char="9" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">9</span><span class="text-[7px] text-deck-400 font-mono">----.</span></div>
+            <div data-code="-----" data-char="0" class="map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright"><span class="text-xs font-mono font-bold text-white">0</span><span class="text-[7px] text-deck-400 font-mono">-----</span></div>
+          </div>
+        </div>
+
+        <!-- NEW: SIGNALS & PROSIGNS TO MEMORIZE -->
+        <div class="pt-2 border-t border-deck-800">
+          <div class="text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
+            <span class="flex items-center space-x-1.5">
+              <i class="fa-solid fa-triangle-exclamation text-signal-amber text-[10px]"></i>
+              <span class="text-gray-200 font-bold">SIGNALS & PROSIGNS TO MEMORIZE</span>
+            </span>
+            <span class="text-[9px] text-deck-500">TAP TO AUDITION & INSERT</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5" id="prosignsGrid">
+            
+            <!-- SOS -->
+            <div data-code="... --- ..." data-label="SOS" data-desc="Distress / Save Souls" class="prosign-card rounded-lg bg-deck-850 border border-red-500/40 hover:border-red-400 p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group shadow-[inset_0_1px_0_rgba(239,68,68,0.1)]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-black text-red-400 group-hover:text-red-300">SOS</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-red-950/80 text-red-300 border border-red-800/60 font-bold">EMERGENCY</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">··· ——— ···</span>
+              <span class="text-[8px] text-deck-400 truncate">Mayday / Distress Call</span>
+            </div>
+
+            <!-- CQ -->
+            <div data-code="-.-. --.-" data-label="CQ" data-desc="Calling Any Station" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-signal-bright">CQ</span>
+                <span class="text-[8px] font-mono text-deck-400">GENERAL</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">—·—· ——·—</span>
+              <span class="text-[8px] text-deck-400 truncate">Calling Any Station</span>
+            </div>
+
+            <!-- 73 -->
+            <div data-code="--... ...--" data-label="73" data-desc="Best Regards" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-signal-amber">73</span>
+                <span class="text-[8px] font-mono text-deck-400">GREETING</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">——··· ···——</span>
+              <span class="text-[8px] text-deck-400 truncate">Best Regards / Farewell</span>
+            </div>
+
+            <!-- K -->
+            <div data-code="-.-" data-label="K" data-desc="Over / Your Turn" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-white">K</span>
+                <span class="text-[8px] font-mono text-deck-400">PROSIGN</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">—·—</span>
+              <span class="text-[8px] text-deck-400 truncate">Over / Transmit Now</span>
+            </div>
+
+            <!-- AR -->
+            <div data-code=".-.-." data-label="AR" data-desc="End of Message" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-white">AR [+][.]</span>
+                <span class="text-[8px] font-mono text-deck-400">PROSIGN</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">·—·—·</span>
+              <span class="text-[8px] text-deck-400 truncate">End of Transmission</span>
+            </div>
+
+            <!-- SK -->
+            <div data-code="...-.-" data-label="SK" data-desc="Silent Key / Final End" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-white">SK</span>
+                <span class="text-[8px] font-mono text-deck-400">PROSIGN</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">···—·—</span>
+              <span class="text-[8px] text-deck-400 truncate">Silent Key / Signing Off</span>
+            </div>
+
+            <!-- AS -->
+            <div data-code=".-..." data-label="AS" data-desc="Wait / Stand By" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-white">AS</span>
+                <span class="text-[8px] font-mono text-deck-400">PROSIGN</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">·—···</span>
+              <span class="text-[8px] text-deck-400 truncate">Wait / Please Stand By</span>
+            </div>
+
+            <!-- R -->
+            <div data-code=".-." data-label="R" data-desc="Roger / Acknowledged" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-white">R</span>
+                <span class="text-[8px] font-mono text-deck-400">PROSIGN</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">·—·</span>
+              <span class="text-[8px] text-deck-400 truncate">Roger / All Received</span>
+            </div>
+
+            <!-- QTH -->
+            <div data-code="--.- - .... .-" data-label="QTH" data-desc="My Location Is..." class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-sky-400">QTH</span>
+                <span class="text-[8px] font-mono text-deck-400">Q-CODE</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">——·— - ····</span>
+              <span class="text-[8px] text-deck-400 truncate">What is your location?</span>
+            </div>
+
+            <!-- QSL -->
+            <div data-code="--.- ... .-.." data-label="QSL" data-desc="I Acknowledge Receipt" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-sky-400">QSL</span>
+                <span class="text-[8px] font-mono text-deck-400">Q-CODE</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">——·— ··· ·—··</span>
+              <span class="text-[8px] text-deck-400 truncate">Receipt Confirmed</span>
+            </div>
+
+            <!-- QRZ -->
+            <div data-code="--.- .-. --.." data-label="QRZ" data-desc="Who is Calling Me?" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-signal-bright p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-sky-400">QRZ</span>
+                <span class="text-[8px] font-mono text-deck-400">Q-CODE</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">——·— ·—· ——··</span>
+              <span class="text-[8px] text-deck-400 truncate">Who Is Calling Me?</span>
+            </div>
+
+            <!-- ERR / HH (8 Dits) -->
+            <div data-code="........" data-label="ERR" data-desc="Correction / Mistake" class="prosign-card rounded-lg bg-deck-850 border border-deck-700 hover:border-red-400 p-2 flex flex-col justify-between cursor-pointer transition hover:bg-deck-800 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-red-400">HH / ERR</span>
+                <span class="text-[8px] font-mono text-deck-400">ERROR</span>
+              </div>
+              <span class="text-[9px] text-signal-bright font-mono tracking-wider font-semibold my-0.5">········ (8 dits)</span>
+              <span class="text-[8px] text-deck-400 truncate">Correction / Error</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Practice Area with Simplified General Key -->
+      <div class="bg-deck-900 border border-deck-800 rounded-xl p-4 space-y-3">
+        <!-- Live Transcribed Text -->
+        <div class="bg-deck-950 p-3 rounded-lg border border-deck-800">
+          <div class="flex items-center justify-between text-[11px] font-mono text-deck-400 mb-1">
+            <span>LIVE PRACTICE TRANSCRIPT:</span>
+            <div class="flex items-center space-x-3">
+              <span class="text-[10px] text-deck-500 hidden sm:inline">[BACKSPACE] deletes</span>
+              <button id="btnBackPractice" class="text-deck-400 hover:text-white transition"><i class="fa-solid fa-delete-left mr-1"></i>BACK</button>
+              <button id="btnClearPractice" class="text-red-400 hover:text-red-300 transition"><i class="fa-solid fa-trash-can mr-1"></i>CLEAR</button>
+            </div>
+          </div>
+          <div id="practiceTranscript" class="font-mono text-lg font-bold text-signal-bright min-h-[30px] tracking-widest break-words">
+            <span class="text-deck-600 font-normal text-xs italic">Tap or hold key below to watch the green tracker navigate the map...</span>
+          </div>
+        </div>
+
+        <!-- The Simplified General Signal Key -->
+        <div class="pt-1">
+          <button id="practiceKeyPad" class="w-full h-28 sm:h-32 rounded-xl bg-gradient-to-b from-deck-800 to-deck-900 border-2 border-deck-700 hover:border-signal-bright active:key-active flex flex-col items-center justify-center space-y-2 transition select-none cursor-pointer focus:outline-none shadow-md">
+            <div class="w-12 h-12 rounded-full bg-deck-850 border border-deck-700 flex items-center justify-center text-signal-bright shadow-[0_0_10px_rgba(52,211,153,0.15)]">
+              <i class="fa-solid fa-fingerprint text-xl"></i>
+            </div>
+            <span class="font-mono text-xs font-bold text-gray-200 tracking-wider">SIGNAL KEY</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- VIEW 2: DAILY TRANSMISSION -->
+    <section id="view-daily" class="hidden space-y-4">
+      
+      <!-- Target Phrase Card -->
+      <div class="bg-deck-900 border border-deck-800 rounded-xl p-4 sm:p-5 shadow-lg space-y-4">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-deck-800 pb-3 gap-2">
+          <div>
+            <div class="flex items-center space-x-2 text-[10px] font-mono text-signal-bright">
+              <span class="w-2 h-2 rounded-full bg-signal-bright animate-pulse"></span>
+              <span>DAILY 4-WORD TRANSMISSION</span>
+            </div>
+            <h2 class="text-base font-bold font-mono text-white mt-0.5" id="dailyDateTitle">DISPATCH // TODAY</h2>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button id="btnListenDaily" class="px-3 py-1.5 rounded-lg bg-deck-850 border border-signal-bright/40 hover:border-signal-bright text-signal-bright font-mono text-xs font-semibold flex items-center space-x-1.5 transition">
+              <i class="fa-solid fa-volume-high text-xs"></i>
+              <span id="listenBtnText">LISTEN TARGET</span>
+            </button>
+            <button id="btnDailyShuffle" class="p-1.5 px-2.5 rounded-lg bg-deck-850 border border-deck-700 hover:border-deck-600 text-deck-400 text-xs font-mono transition" title="Next Practice Phrase">
+              <i class="fa-solid fa-shuffle"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Words Target Display with Independent Visibility Toggles -->
+        <div class="bg-deck-950 p-4 rounded-xl border border-deck-800 space-y-3">
+          
+          <!-- Row 1: Target Phrase Header + Toggle -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] font-mono text-deck-500">TARGET PHRASE</span>
+              <button id="btnToggleHidePhrase" class="text-xs font-mono text-deck-400 hover:text-white flex items-center space-x-1 transition" title="Toggle Target Phrase Visibility">
+                <i class="fa-regular fa-eye text-[11px]" id="iconTogglePhrase"></i>
+                <span id="labelTogglePhrase" class="text-[10px]">HIDE</span>
+              </button>
+            </div>
+            
+            <div id="dailyTargetPhrase" class="font-mono text-xl sm:text-2xl font-bold tracking-widest text-signal-amber transition duration-200">
+              ROGER THAT STAY SAFE
+            </div>
+            <div id="dailyTargetPhraseMasked" class="hidden font-mono text-xl sm:text-2xl font-bold tracking-widest text-deck-600 select-none">
+              •••• •••• •••• ••••
+            </div>
+          </div>
+
+          <!-- Row 2: Morse Encoding Header + Toggle -->
+          <div class="pt-2 border-t border-deck-900">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] font-mono text-deck-500">MORSE ENCODING</span>
+              <button id="btnToggleHideMorse" class="text-xs font-mono text-deck-400 hover:text-white flex items-center space-x-1 transition" title="Toggle Morse Encoding Hint">
+                <i class="fa-regular fa-eye text-[11px]" id="iconToggleMorse"></i>
+                <span id="labelToggleMorse" class="text-[10px]">HIDE</span>
+              </button>
+            </div>
+
+            <div id="dailyTargetMorse" class="font-mono text-xs sm:text-sm tracking-widest text-signal-bright bg-deck-900/80 p-2.5 rounded-lg border border-deck-800/80 break-words transition duration-200">
+              .-. --- --. . .-. / - .... .- - / ... - .- -.-- / ... .- ..-. .
+            </div>
+            <div id="dailyTargetMorseMasked" class="hidden font-mono text-xs sm:text-sm tracking-widest text-deck-600 bg-deck-900/40 p-2.5 rounded-lg border border-deck-800/40 select-none">
+              ••••••••••••••••••••••••••••••••••••••••
+            </div>
+          </div>
+
+        </div>
+
+        <!-- User's Live Input Feed with Decoded Text Visibility Toggle -->
+        <div class="bg-deck-950 p-4 rounded-xl border border-deck-800 space-y-2">
+          <div class="flex justify-between items-center text-[10px] font-mono text-deck-400">
+            <div class="flex items-center space-x-3">
+              <span>LIVE TRANSMISSION:</span>
+              <button id="btnToggleHideLive" class="text-deck-400 hover:text-white flex items-center space-x-1 transition" title="Toggle Live Decoded Output">
+                <i class="fa-regular fa-eye text-[11px]" id="iconToggleLive"></i>
+                <span id="labelToggleLive" class="text-[10px]">HIDE</span>
+              </button>
+            </div>
+            <button id="btnClearDaily" class="text-red-400 hover:text-red-300 transition"><i class="fa-solid fa-rotate-left mr-1"></i>RESET</button>
+          </div>
+
+          <div id="dailyUserDecodedWrap">
+            <div id="dailyUserDecoded" class="font-mono text-lg font-bold text-white min-h-[32px] tracking-widest break-words">
+              <span class="text-deck-600 font-normal text-xs italic">Tap key below to begin transmission...</span>
+            </div>
+            <div id="dailyUserDecodedMasked" class="hidden font-mono text-lg font-bold text-deck-600 min-h-[32px] tracking-widest select-none">
+              [BLIND TRANSMISSION HIDDEN]
+            </div>
+          </div>
+          
+          <div id="dailyUserRawMorse" class="font-mono text-xs text-signal-bright min-h-[18px] tracking-widest break-words opacity-80">
+          </div>
+        </div>
+
+        <!-- The Simplified General Daily Keyer -->
+        <div>
+          <button id="dailyKeyPad" class="w-full h-28 sm:h-32 rounded-xl bg-gradient-to-b from-deck-800 to-deck-900 border-2 border-deck-700 hover:border-signal-bright active:key-active flex flex-col items-center justify-center space-y-2 transition select-none cursor-pointer focus:outline-none shadow-md">
+            <div class="w-12 h-12 rounded-full bg-deck-850 border border-deck-700 flex items-center justify-center text-signal-amber shadow-[0_0_10px_rgba(245,158,11,0.15)]">
+              <i class="fa-solid fa-radio text-xl"></i>
+            </div>
+            <span class="font-mono text-xs font-bold text-gray-200 tracking-wider">SIGNAL KEY</span>
+          </button>
+          
+          <div class="flex items-center space-x-2 mt-2">
+            <button id="btnDailyWordGap" class="flex-1 py-2 rounded-lg bg-deck-850 border border-deck-700 hover:border-deck-600 text-xs font-mono text-deck-400 hover:text-white transition">
+              WORD SPACE ( / )
+            </button>
+            <button id="btnDailyBackspace" class="px-4 py-2 rounded-lg bg-deck-850 border border-deck-700 hover:border-deck-600 text-xs font-mono text-red-400 transition" title="Delete Last Morse Symbol [Backspace]">
+              <i class="fa-solid fa-delete-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit & Evaluate Trigger -->
+        <div class="pt-2">
+          <button id="btnSubmitDaily" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold tracking-wider shadow-lg transition flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>SUBMIT TRANSMISSION & VERIFY ACCURACY</span>
+          </button>
+        </div>
+
+        <!-- Result Card -->
+        <div id="dailyResultCard" class="hidden bg-deck-900 border border-deck-800 rounded-xl p-4 sm:p-5 shadow-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-deck-800 pb-3">
+            <div>
+              <span class="text-[10px] font-mono text-signal-bright">AUDIT COMPLETED</span>
+              <h3 class="text-base font-bold font-mono text-white">ACCURACY SCORE</h3>
+            </div>
+            <span id="dailyAccuracyBadge" class="text-2xl font-bold font-mono text-signal-bright">94%</span>
+          </div>
+
+          <div class="space-y-1.5">
+            <span class="text-[11px] font-mono text-deck-400">CHARACTER-BY-CHARACTER MATCH:</span>
+            <div id="dailyCharMatchGrid" class="flex flex-wrap gap-1 p-3 rounded-lg bg-deck-950 border border-deck-800 font-mono text-xs">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end pt-2">
+            <button id="btnCloseResult" class="px-4 py-1.5 rounded-lg bg-deck-800 hover:bg-deck-700 text-xs font-mono text-gray-200 transition">
+              CLOSE AUDIT
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- VIEW 3: SETTINGS -->
+    <section id="view-settings" class="hidden space-y-4">
+      
+      <div class="bg-deck-900 border border-deck-800 rounded-xl p-4 sm:p-5 shadow-lg space-y-5">
+        <div class="border-b border-deck-800 pb-2">
+          <h2 class="text-base font-bold font-mono text-white flex items-center space-x-2">
+            <i class="fa-solid fa-sliders text-signal-bright"></i>
+            <span>STATION CONFIGURATION</span>
+          </h2>
+          <p class="text-xs font-mono text-deck-400">CALIBRATE CW AUDIO FREQUENCY AND KEYING THRESHOLDS</p>
+        </div>
+
+        <div class="space-y-4 text-xs font-mono">
+          
+          <!-- Audio Pitch / Frequency -->
+          <div class="bg-deck-950 p-3.5 rounded-lg border border-deck-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-gray-200 font-bold block">TONE FREQUENCY (PITCH)</span>
+              <span class="text-deck-500 text-[11px]">Standard ITU telegraph carrier tone: 700 Hz</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <input id="setFreqSlider" type="range" min="450" max="900" step="25" value="700" class="w-32 accent-emerald-500">
+              <span id="setFreqValue" class="text-signal-bright font-bold w-14 text-right">700 Hz</span>
+            </div>
+          </div>
+
+          <!-- Hold Threshold (Dot vs Dash) -->
+          <div class="bg-deck-950 p-3.5 rounded-lg border border-deck-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-gray-200 font-bold block">DOT / DASH HOLD THRESHOLD</span>
+              <span class="text-deck-500 text-[11px]">Duration under this threshold registers as a dot (·)</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <input id="setHoldSlider" type="range" min="100" max="320" step="10" value="160" class="w-32 accent-emerald-500">
+              <span id="setHoldValue" class="text-signal-amber font-bold w-14 text-right">160 ms</span>
+            </div>
+          </div>
+
+          <!-- Playback Speed (WPM) -->
+          <div class="bg-deck-950 p-3.5 rounded-lg border border-deck-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-gray-200 font-bold block">TRANSMISSION SPEED (WPM)</span>
+              <span class="text-deck-500 text-[11px]">Controls speed of daily target audio demonstration</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <input id="setWpmSlider" type="range" min="8" max="25" step="1" value="15" class="w-32 accent-emerald-500">
+              <span id="setWpmValue" class="text-signal-bright font-bold w-14 text-right">15 WPM</span>
+            </div>
+          </div>
+
+          <!-- Volume Toggle -->
+          <div class="bg-deck-950 p-3.5 rounded-lg border border-deck-800 flex items-center justify-between">
+            <div>
+              <span class="text-gray-200 font-bold block">AUDIO SOUND OUTPUT</span>
+              <span class="text-deck-500 text-[11px]">Toggle synthesizer beeps on and off</span>
+            </div>
+            <button id="btnToggleSoundMute" class="px-3.5 py-1.5 rounded-lg bg-deck-800 border border-deck-700 text-signal-bright font-bold">
+              ENABLED
+            </button>
+          </div>
+
+          <!-- Reset Default Settings -->
+          <div class="bg-deck-950 p-3.5 rounded-lg border border-deck-800 flex items-center justify-between">
+            <div>
+              <span class="text-deck-300 font-bold block">RESTORE DEFAULT SETTINGS</span>
+              <span class="text-deck-500 text-[11px]">Reset frequency, threshold, and transmission speed</span>
+            </div>
+            <button id="btnResetAllData" class="px-3.5 py-1.5 rounded-lg bg-deck-850 hover:bg-deck-800 border border-deck-700 text-deck-300 font-bold transition">
+              RESTORE
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Modern Fixed Bottom Navigation Dock with Minimalist Symbols -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-deck-950/90 backdrop-blur-md border-t border-deck-800 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.6)]">
+    <div class="max-w-md mx-auto px-6 py-2.5 flex items-center justify-around">
+      
+      <!-- Icon 1: Live Map & Keyer (Radar / Network Nodes) -->
+      <button id="nav-map" aria-label="Interactive Map & Practice Key" title="Live Map & Practice" class="nav-btn relative group p-2.5 rounded-2xl flex flex-col items-center justify-center transition-all duration-200 text-signal-bright bg-deck-850/80 shadow-[0_0_12px_rgba(52,211,153,0.25)] ring-1 ring-signal-bright/40">
+        <i class="fa-solid fa-circle-nodes text-xl"></i>
+        <span class="absolute -top-1 w-1.5 h-1.5 rounded-full bg-signal-bright indicator-dot"></span>
+      </button>
+
+      <!-- Icon 2: Daily Challenge (Calendar Target / Transmission) -->
+      <button id="nav-daily" aria-label="Daily 4-Word Transmission" title="Daily Transmission" class="nav-btn relative group p-2.5 rounded-2xl flex flex-col items-center justify-center transition-all duration-200 text-deck-400 hover:text-gray-200 hover:bg-deck-900">
+        <i class="fa-solid fa-calendar-check text-xl"></i>
+        <span class="absolute -top-1 w-1.5 h-1.5 rounded-full bg-signal-bright hidden indicator-dot"></span>
+      </button>
+
+      <!-- Icon 3: Settings (Gear / Frequency Calibration) -->
+      <button id="nav-settings" aria-label="Station Settings" title="Settings" class="nav-btn relative group p-2.5 rounded-2xl flex flex-col items-center justify-center transition-all duration-200 text-deck-400 hover:text-gray-200 hover:bg-deck-900">
+        <i class="fa-solid fa-sliders text-xl"></i>
+        <span class="absolute -top-1 w-1.5 h-1.5 rounded-full bg-signal-bright hidden indicator-dot"></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Notification Toast -->
+  <div id="toastBox" class="fixed bottom-20 right-4 z-50 bg-deck-850 border border-deck-700 text-signal-bright px-3.5 py-2 rounded-lg shadow-xl font-mono text-xs hidden items-center space-x-2">
+    <i class="fa-solid fa-circle-info text-signal-bright"></i>
+    <span id="toastText">Ready</span>
+  </div>
+
+</body>
+</html>

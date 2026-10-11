@@ -36,6 +36,12 @@ const tools = [
         "thumbnail": "wheel-spinner/thumbnail.png"
     },
     {
+        "id": "morse",
+        "title": "Morse Navigator",
+        "description": "Practice Morse code with an interactive decoder map and daily transmissions.",
+        "thumbnail": "morse/thumbnail.png"
+    },
+    {
         "id": "time-zoner",
         "title": "Time Zoner",
         "description": "Convert time across different timezones using interactive sliders.",
