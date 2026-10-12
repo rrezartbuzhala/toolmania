@@ -240,14 +240,17 @@
         </div>
 
         <!-- Alphabet Band (A - Z) -->
-        <div class="pt-2 border-t border-deck-800">
-          <div class="text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
+        <details class="pt-2 border-t border-deck-800">
+          <summary class="signals-toggle text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
             <span>ALPHABET BAND (A - Z)</span>
-            <span class="text-[9px] text-deck-500">TAP TO AUDITION</span>
-          </div>
+            <span class="flex items-center space-x-1.5">
+              <span class="text-[9px] text-deck-500">TAP TO AUDITION</span>
+              <i class="fa-solid fa-chevron-down signals-toggle-icon text-[9px]"></i>
+            </span>
+          </summary>
           <div class="grid grid-cols-7 sm:grid-cols-9 md:grid-cols-13 gap-1 text-center" id="alphabetGrid">
           </div>
-        </div>
+        </details>
 
         <!-- Dedicated Numbers Row (0 to 9) -->
         <div class="pt-2 border-t border-deck-800">
@@ -270,14 +273,17 @@
         </div>
 
         <!-- NEW: SIGNALS & PROSIGNS TO MEMORIZE -->
-        <div class="pt-2 border-t border-deck-800">
-          <div class="text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
+        <details class="pt-2 border-t border-deck-800">
+          <summary class="signals-toggle text-[10px] font-mono text-deck-400 mb-1.5 flex items-center justify-between">
             <span class="flex items-center space-x-1.5">
               <i class="fa-solid fa-triangle-exclamation text-signal-amber text-[10px]"></i>
               <span class="text-gray-200 font-bold">SIGNALS & PROSIGNS TO MEMORIZE</span>
             </span>
-            <span class="text-[9px] text-deck-500">TAP TO AUDITION & INSERT</span>
-          </div>
+            <span class="flex items-center space-x-1.5">
+              <span class="text-[9px] text-deck-500">TAP TO AUDITION & INSERT</span>
+              <i class="fa-solid fa-chevron-down signals-toggle-icon text-[9px]"></i>
+            </span>
+          </summary>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5" id="prosignsGrid">
             
@@ -402,7 +408,7 @@
             </div>
 
           </div>
-        </div>
+        </details>
 
       </div>
 

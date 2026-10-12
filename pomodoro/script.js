@@ -2,6 +2,7 @@ const appId = 'pomodoro';
 
 let timer;
 let timeLeft;
+let endTime;
 let isRunning = false;
 let currentSession = 'work';
 let sessionCount = 0;
@@ -43,6 +44,7 @@ function saveSettings() {
 
 function resetTimer() {
     clearInterval(timer);
+    endTime = null;
     isRunning = false;
     currentSession = 'work';
     sessionCount = 0;
@@ -53,8 +55,9 @@ function resetTimer() {
 function startTimer() {
     if (!isRunning) {
         isRunning = true;
+        endTime = Date.now() + timeLeft * 1000;
         timer = setInterval(() => {
-            timeLeft--;
+            timeLeft = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
             updateDisplay();
             if (timeLeft <= 0) {
                 nextSession();
@@ -65,11 +68,21 @@ function startTimer() {
 
 function pauseTimer() {
     clearInterval(timer);
+    if (isRunning) {
+        timeLeft = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+        if (timeLeft <= 0) {
+            nextSession();
+            return;
+        }
+        updateDisplay();
+    }
+    endTime = null;
     isRunning = false;
 }
 
 function nextSession() {
     clearInterval(timer);
+    endTime = null;
     isRunning = false;
 
     playBeep(); // Play sound when session changes

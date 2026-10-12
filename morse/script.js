@@ -432,8 +432,10 @@
       // Render Alphabet Band Tiles
       const alphaGrid = document.getElementById('alphabetGrid');
       alphaGrid.innerHTML = '';
-      for (let i = 65; i <= 90; i++) {
-        const char = String.fromCharCode(i);
+      const alphabet = Object.keys(MORSE_TABLE)
+        .filter(char => /^[A-Z]$/.test(char))
+        .sort();
+      for (const char of alphabet) {
         const code = MORSE_TABLE[char];
         const tile = document.createElement('div');
         tile.className = 'map-node char-grid-node h-9 rounded bg-deck-850 border border-deck-700 flex flex-col items-center justify-center cursor-pointer hover:border-signal-bright';
