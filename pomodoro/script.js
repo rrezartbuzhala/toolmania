@@ -16,10 +16,40 @@ const settings = {
     sessions: 4
 };
 
+const MAX_ALARM_MS = 30000;
+const ACTIVITY_EVENTS = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'];
+let alarmTimeout;
+
+function stopBeep() {
+    clearTimeout(alarmTimeout);
+    ACTIVITY_EVENTS.forEach(name => document.removeEventListener(name, stopBeep));
+    document.removeEventListener('visibilitychange', onAlarmVisibilityChange);
+    const audio = document.getElementById('sound');
+    audio.loop = false;
+    audio.pause();
+    audio.currentTime = 0;
+}
+
+function onAlarmVisibilityChange() {
+    if (document.visibilityState === 'visible') {
+        stopBeep();
+    }
+}
+
+// Loops the sound until the user is active again, or 30 seconds pass.
 function playBeep() {
     const audio = document.getElementById('sound');
-    audio.currentTime = 0; // Reset to start
+    stopBeep();
+    audio.loop = true;
     audio.play().catch(e => console.log('Audio play failed:', e));
+    alarmTimeout = setTimeout(stopBeep, MAX_ALARM_MS);
+    // Delay listeners so the interaction that triggered the session end doesn't stop it instantly
+    setTimeout(() => {
+        if (!audio.paused) {
+            ACTIVITY_EVENTS.forEach(name => document.addEventListener(name, stopBeep, { once: true }));
+            document.addEventListener('visibilitychange', onAlarmVisibilityChange);
+        }
+    }, 1000);
 }
 
 function loadSettings() {
@@ -55,6 +85,7 @@ function resetTimer() {
 }
 
 function startTimer() {
+    stopBeep();
     if (!isRunning) {
         isRunning = true;
         endTime = Date.now() + timeLeft * 1000;
