@@ -1,6 +1,7 @@
 const appId = 'pomodoro';
 
 let timer;
+let timerWorker;
 let timeLeft;
 let endTime;
 let isRunning = false;
@@ -44,6 +45,7 @@ function saveSettings() {
 
 function resetTimer() {
     clearInterval(timer);
+    stopWorkerTimer();
     endTime = null;
     isRunning = false;
     currentSession = 'work';
@@ -56,12 +58,11 @@ function startTimer() {
     if (!isRunning) {
         isRunning = true;
         endTime = Date.now() + timeLeft * 1000;
+        if (timerWorker) {
+            timerWorker.postMessage({ type: 'start', endTime });
+        }
         timer = setInterval(() => {
-            timeLeft = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
-            updateDisplay();
-            if (timeLeft <= 0) {
-                nextSession();
-            }
+            updateRemainingTime();
         }, 1000);
     }
 }
@@ -76,12 +77,32 @@ function pauseTimer() {
         }
         updateDisplay();
     }
+    stopWorkerTimer();
     endTime = null;
     isRunning = false;
 }
 
+function stopWorkerTimer() {
+    if (timerWorker) {
+        timerWorker.postMessage({ type: 'stop' });
+    }
+}
+
+function updateRemainingTime() {
+    if (!isRunning) {
+        return;
+    }
+
+    timeLeft = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+    updateDisplay();
+    if (timeLeft <= 0) {
+        nextSession();
+    }
+}
+
 function nextSession() {
     clearInterval(timer);
+    stopWorkerTimer();
     endTime = null;
     isRunning = false;
 
@@ -155,6 +176,27 @@ document.getElementById('tomato').addEventListener('click', () => {
 });
 
 window.onload = () => {
+    try {
+        timerWorker = new Worker('timer-worker.js');
+        timerWorker.addEventListener('message', event => {
+            if (event.data.type === 'complete' && isRunning && Date.now() >= endTime) {
+                timeLeft = 0;
+                nextSession();
+            }
+        });
+        timerWorker.addEventListener('error', event => {
+            console.error('Background timer worker failed:', event.message);
+        });
+    } catch (error) {
+        console.error('Background timer worker could not be started:', error);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            updateRemainingTime();
+        }
+    });
+
     loadSettings();
     
     document.getElementById('start').addEventListener('click', startTimer);
